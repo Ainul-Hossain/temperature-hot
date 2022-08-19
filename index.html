@@ -48,7 +48,7 @@
         function showData(place) {
             let placeName, temperature, humidity, country, atmosphere, icon;
 
-            fetch(`http://api.openweathermap.org/data/2.5/weather?q=${place}&APPID=c7599d3ef49467cb6c9c56073451b8d0`)
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${place}&APPID=c7599d3ef49467cb6c9c56073451b8d0`)
             .then((res) => res.json())
             .then((data) => {
                 placeName = data.name;
