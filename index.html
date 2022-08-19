@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input id="place" type="text" class="form-control" placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button id="search" type="button" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img id="icon" src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <h1 id="replace">Dhaka</h1>
+            <h3><span id="celcius">38.06</span>&deg;C</h3>
+            <h1 id="atmos" class="lead">Clouds</h1>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('search').addEventListener('click', function () {
+            let place = document.getElementById('place').value;
+            let replace = document.getElementById('replace');
+            let celcius = document.getElementById('celcius');
+
+            showData(place);
+        })
+
+        function showData(place) {
+            let placeName, temperature, humidity, country, atmosphere, icon;
+
+            fetch(`http://api.openweathermap.org/data/2.5/weather?q=${place}&APPID=c7599d3ef49467cb6c9c56073451b8d0`)
+            .then((res) => res.json())
+            .then((data) => {
+                placeName = data.name;
+                temperature = Math.ceil(data.main.temp - 273.15);
+                humidity = data.main.humidity;
+                country = data.sys.country;
+                atmosphere = data.weather[0].main;
+                icon = data.weather[0].icon;
+
+                replace.innerText = placeName + ', ' + country;
+                celcius.innerText = temperature;
+
+                let replaceIcon = document.getElementById('icon');
+                replaceIcon.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+
+                let replaceAtmosphere = document.getElementById('atmos');
+                replaceAtmosphere.innerText = atmosphere;
+            });
+        }
+    </script>
+
+</body>
+
+</html>
